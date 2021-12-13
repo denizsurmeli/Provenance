@@ -18,6 +18,12 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  */
 
 require("@nomiclabs/hardhat-truffle5");
+require("hardhat-gas-reporter");
 module.exports = {
   solidity: "0.8.5",
+  gasReporter: {
+    currency: 'USD',
+    token:'ETH',
+    
+  }
 };

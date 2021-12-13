@@ -36,6 +36,7 @@ contract("Provenance contract", async (accounts) =>{
         await _provenance.mintProductToken(34355);
 
         await _provenance.transferToken(factoryAddress,verifiedAddress,0);
+        await _provenance.approveOwnership(0,{from:verifiedAddress});
         try{
             await _provenance.transferToken(factoryAddress,unverifiedAddress,1);
             assert(false);
