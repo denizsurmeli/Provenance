@@ -93,4 +93,14 @@ contract("Provenance contract", async (accounts) =>{
             assert(err);
         }
     });
+    it("should not show the address in owners array if the token is not approved",async()=>{
+        let account = accounts[1];
+
+        await _legalEntityVerification.verify(account);
+        await _provenance.mintProductToken(123);
+        await _provenance.transferToken(accounts[0],account,0);
+
+        let lastOwner = await _provenance.getAllOwners[-1];
+        assert(lastOwner != account,"account did not approve the token, it should not be seen as the last owner");
+    })
 })
