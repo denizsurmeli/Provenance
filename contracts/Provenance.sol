@@ -136,15 +136,6 @@ contract Provenance is ERC721{
     }
 
 
-    /// @notice Gets the products fields. 
-    /// @param productId Queried product.
-    /// @return Hash of the serialized number as a string, zip code of the manufacturer as uint.
-    /// TODO:Broken, can be depracted, no use case.
-    function getProduct(uint productId) public view returns(string memory,uint256){
-        string memory temp = string(abi.encodePacked(products[productId]._serialHash));
-        return(temp,products[productId]._manufacturerZipCode);
-    }
-
     /// @notice Gets the factory address.(for testing purposes)
     /// @return the factory address.
     function getFactoryAddress() public view returns(address){

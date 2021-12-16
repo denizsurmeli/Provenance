@@ -19,11 +19,19 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 
 require("@nomiclabs/hardhat-truffle5");
 require("hardhat-gas-reporter");
+require("dotenv").config();
+
 module.exports = {
   solidity: "0.8.5",
   gasReporter: {
     currency: 'USD',
     token:'ETH',
     
+  },
+  networks:{
+    rinkeby:{
+      url:process.env.INFURA_URL,
+      accounts:{mnemonic:process.env.MNEMONIC}
+    }
   }
 };
