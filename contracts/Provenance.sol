@@ -51,6 +51,9 @@ contract Provenance is ERC721{
     /// @notice We use this mapping to track the origins of the products.
     mapping(uint256=>address[]) owners;
 
+    /// @notice We track is in approval or not.
+    mapping(uint256=>bool) approvalState;
+
     /// @notice Only addresses that have been approved by state authority can perform actions.
     /// @param _address address to be queried. 
     modifier onlyVerifiedAddress(address _address){
@@ -63,6 +66,12 @@ contract Provenance is ERC721{
     /// @param _tokenId id of the token.
     modifier onlyExistentToken(uint256 _tokenId){
         require(ownerOf(_tokenId) != address(0),"Only minted tokens can be transferred.");
+        _;
+    }
+    /// @notice Only tokens that in state of approval can perform actions
+    /// @param _tokenId id of the token.
+    modifier onlyNonApprovedToken(uint256 _tokenId){
+        require(approvalState[_tokenId] == true);
         _;
     }
 
@@ -91,17 +100,18 @@ contract Provenance is ERC721{
     }
     /// @notice Ownership approval function. Observe that we are going a bit offroad from ERC-721 Standard here.
     /// @param _tokenId Token that will be approved. 
-    function approveOwnership(uint256 _tokenId) onlyOwner(_tokenId,msg.sender) public{
+    function approveOwnership(uint256 _tokenId) onlyOwner(_tokenId,msg.sender) onlyNonApprovedToken(_tokenId) public{
         owners[_tokenId].push(msg.sender);
+        approvalState[_tokenId] = false;
     }
 
     /// @notice Transfers the token with _tokenId from _from to _to.
     /// @param _from Address that is transfering.
     /// @param _to   Address to be transfered.
     /// @param _tokenId ID of the token to be transfered.
-    function transferToken(address _from,address _to, uint256 _tokenId) onlyOwner(_tokenId,_from) onlyExistentToken(_tokenId) onlyVerifiedAddress(_to) public {
+    function transferToken(address _from,address _to, uint256 _tokenId) onlyOwner(_tokenId,_from) onlyVerifiedAddress(_to) onlyExistentToken(_tokenId)  public {
         _transfer(_from,_to,_tokenId);
-
+        approvalState[_tokenId] = true;
         emit Transfer(_from,_to,_tokenId);
     }
     
@@ -119,6 +129,7 @@ contract Provenance is ERC721{
             _manufacturerZipCode: manufacturerZipCode
         });
         
+        approvalState[productId] = true;
         //auto-approve transfer for factory
         approveOwnership(productId);
 
@@ -140,6 +151,12 @@ contract Provenance is ERC721{
     /// @return the factory address.
     function getFactoryAddress() public view returns(address){
         return factory;
+    }
+
+    /// @notice Gets the approval state of the token
+    /// @return the token id
+    function getApprovalState(uint256 _tokenId) public view returns(bool){
+        return approvalState[_tokenId];
     }
     
     /// @notice Returns the list of all owners for a token.(for testing purposes)
