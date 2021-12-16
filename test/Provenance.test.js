@@ -132,5 +132,44 @@ contract("Provenance contract", async (accounts) =>{
 
         let lastOwner = await _provenance.getAllOwners[-1];
         assert(lastOwner != account,"account did not approve the token, it should not be seen as the last owner");
-    })
+    });
+
+    it("should show a two-times owner in the owner history",async()=>{
+        let twoTimeOwner = accounts[3];
+        let auxAdd = accounts[2];
+
+        await _legalEntityVerification.verify(twoTimeOwner);
+        await _legalEntityVerification.verify(auxAdd);
+
+        await _provenance.mintProductToken(123854);
+
+        await _provenance.transferToken(await _provenance.getFactoryAddress(),twoTimeOwner,0);
+        await _provenance.approveOwnership(0,{from:twoTimeOwner});
+        await _provenance.transferToken(twoTimeOwner,auxAdd,0);
+        await _provenance.approveOwnership(0,{from:auxAdd});
+        await _provenance.transferToken(auxAdd,twoTimeOwner,0);
+        await _provenance.approveOwnership(0,{from:twoTimeOwner});
+
+        let ownerHistory = await _provenance.getAllOwners(0);
+
+        assert(twoTimeOwner == ownerHistory[1],"Owner history is corrupt.");
+        assert(twoTimeOwner == ownerHistory[3],"Owner history is corrupt.");
+        
+    });
+
+    it("the owner should not send the token to herself",async ()=>{
+        let account = accounts[1];
+
+        await _provenance.mintProductToken(213);
+        await _legalEntityVerification.verify(account);
+        await _provenance.transferToken(await _provenance.getFactoryAddress(),account,0);
+        await _provenance.approveOwnership(0,{from:account});
+
+        try{
+            await _provenance.transferToken(account,account,0);
+            assert(false);
+        }catch(err){
+            assert(err);
+        }
+    });
 })

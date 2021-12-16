@@ -110,6 +110,7 @@ contract Provenance is ERC721{
     /// @param _to   Address to be transfered.
     /// @param _tokenId ID of the token to be transfered.
     function transferToken(address _from,address _to, uint256 _tokenId) onlyOwner(_tokenId,_from) onlyVerifiedAddress(_to) onlyExistentToken(_tokenId)  public {
+        require(_to != ownerOf(_tokenId));
         _transfer(_from,_to,_tokenId);
         approvalState[_tokenId] = true;
         emit Transfer(_from,_to,_tokenId);
