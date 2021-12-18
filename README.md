@@ -79,8 +79,8 @@ npx hardhat run ./scripts/deploy.js --network <YOUR_NETWORK_NAME>
 
 
 ## AVA Fuji Testnet Contract Addresses
-- `LegalEntityVerification.sol`:(0x13D53a1F78A4E65182A9d19b68C75a41d0d8955b)[https://testnet.snowtrace.io/address/0x13d53a1f78a4e65182a9d19b68c75a41d0d8955b]
-- `Provenance.sol`:(0xdF1A9cc4E2869278c12851dC3De27Acf9E6D63c3)[https://testnet.snowtrace.io/address/0xdf1a9cc4e2869278c12851dc3de27acf9e6d63c3]
+- `LegalEntityVerification.sol`:[0x13D53a1F78A4E65182A9d19b68C75a41d0d8955b](https://testnet.snowtrace.io/address/0x13d53a1f78a4e65182a9d19b68c75a41d0d8955b)
+- `Provenance.sol`:[0xdF1A9cc4E2869278c12851dC3De27Acf9E6D63c3](https://testnet.snowtrace.io/address/0xdf1a9cc4e2869278c12851dc3de27acf9e6d63c3)
 
 # Q&A:
  - How to ensure there is only one state? : We pass the address of the deployed state authority to the Provenance constructor, meaning that only state we will listen is the one with given address.
