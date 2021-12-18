@@ -54,7 +54,7 @@ A simple flow happens as follow:
 - If receiver accepts the transferred token, she approves the ownership with `approveOwnership` function and she becomes the new owner of the token. Else, the token's ownership history will not show the latest address who received the token.
 
 ## Usage
-We used [Hardhat](https://hardhat.org/) in this project for testing and deploying.
+We used [Hardhat](https://hardhat.org/) in this project for testing and deploying to `Rinkeby`.We have manually deployed to `AVA Fuji Testnet` as the final network for the task. The contract addresses are at the end of the file.
 
 First install the required dependencies by running:
 ```
@@ -70,22 +70,23 @@ When you run the tests, you can see how much gas do the functions spend in the t
 ![The gas usage per function!](./assets/gasresults.png)
 
 For deploying to any network:
-- You have to first specify the network you want to deploy and configure the `hardhat.config.js` file for your needs. This project configured it's network to `Rinkeby`, and provider as [Infura](https://infura.io/).
-- You have to put your private keys, or mnemonic seed, to an `.env` file. Without those requirements, the deploying process will yield errors.
+- You have to first specify the network you want to deploy and configure the `hardhat.config.js` file for your needs. This project configured it's network to `Rinkeby`, and using [Infura](https://infura.io/) as provider.
+- You have to put your mnemonic seed and `Infura` URL to an `.env` file,provided as empty fields in the repository. Without those requirements fulfilled, the deploying process will yield errors.
 After completing the steps, you can deploy the contracts to the network with the command:
 ```
 npx hardhat run ./scripts/deploy.js --network <YOUR_NETWORK_NAME>
 ```
 
 
+## AVA Fuji Testnet Contract Addresses
+- `LegalEntityVerification.sol`:(0x13D53a1F78A4E65182A9d19b68C75a41d0d8955b)[https://testnet.snowtrace.io/address/0x13d53a1f78a4e65182a9d19b68c75a41d0d8955b]
+- `Provenance.sol`:(0xdF1A9cc4E2869278c12851dC3De27Acf9E6D63c3)[https://testnet.snowtrace.io/address/0xdf1a9cc4e2869278c12851dc3de27acf9e6d63c3]
+
 # Q&A:
  - How to ensure there is only one state? : We pass the address of the deployed state authority to the Provenance constructor, meaning that only state we will listen is the one with given address.
  - How to ensure no token has two owners at the same time? : ERC721 handles it.
- - How to ensure no approved token minted? : Mint token function does not start if token is not approved. @MEETINGSUBJECT
- - How to ensure external contracts don't get the `address` - `tokenId` combination at the same time? Is it required : @MEETINGSUBJECT
-// Gas fees can be written on the end of each function description. @MEETINGSUBJECT
 
 
 # Authors
- - Doğukan Türksoy (@ooodogodogodogo)
- - Deniz Sürmeli   (@denizvsurmeli)
+ - Doğukan Türksoy [@ooodogodogodogo](www.github.com/ooodogodogodogo)
+ - Deniz Sürmeli   [@denizvsurmeli](www.github.com/denizvsurmeli)
