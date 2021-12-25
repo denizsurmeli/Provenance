@@ -46,6 +46,12 @@ contract Provenance is ERC721{
         uint256 _manufacturerZipCode; //zip code of the manufacturer. In fact, this is a constant. 
     }
 
+    /// @notice Emits when tokens are transferred.
+    event TokenTransferred(uint256 tokenId,address from,address to);
+
+    /// @notice Emits when an owner approves the ownership.
+    event TokenApproved(uint256 tokenId,address tokenOwner);
+
     mapping(uint256=>Product) products;
 
     /// @notice We use this mapping to track the origins of the products.
@@ -103,6 +109,7 @@ contract Provenance is ERC721{
     function approveOwnership(uint256 _tokenId) onlyOwner(_tokenId,msg.sender) onlyNonApprovedToken(_tokenId) public{
         owners[_tokenId].push(msg.sender);
         approvalState[_tokenId] = false;
+        emit TokenApproved(_tokenId,msg.sender);
     }
 
     /// @notice Transfers the token with _tokenId from _from to _to.
@@ -113,7 +120,7 @@ contract Provenance is ERC721{
         require(_to != ownerOf(_tokenId));
         _transfer(_from,_to,_tokenId);
         approvalState[_tokenId] = true;
-        emit Transfer(_from,_to,_tokenId);
+        emit TokenTransferred(_tokenId,_from,_to);
     }
     
     /// @notice A manufacturer mints a product. Only authorized addreses can call.
