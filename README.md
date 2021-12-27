@@ -95,10 +95,10 @@ npx hardhat run ./scripts/deploy.js --network <YOUR_NETWORK_NAME>
  # Frontend Agenda
  - We should use React.js since we are mostly dealing with states.
  - Use cases:
-    -The chairman wants to mint token, only visible to chairman when he/she connects his/her wallet.
-    -The eligible owner of the token wants to approve the ownership, a button that is only for the owner.
-    -The user wants to see the tokens he/she owns. A column view for the connected party.
-    -The user wants to transfer some tokens, form-like structure.
-    -The user wants to track the origin of the token, a button that is showing the historical ownership
-    -The user wants to see some address is verified or not
-    -Legal entity wants to verify addresses, only visible to legal entity.
+    - The chairman wants to mint token, only visible to chairman when he/she connects his/her wallet.
+    - The eligible owner of the token wants to approve the ownership, a button that is only for the owner.
+    - The user wants to see the tokens he/she owns. A column view for the connected party.
+    - The user wants to transfer some tokens, form-like structure.
+    - The user wants to track the origin of the token, a button that is showing the historical ownership
+    - The user wants to see some address is verified or not
+    - Legal entity wants to verify addresses, only visible to legal entity.
