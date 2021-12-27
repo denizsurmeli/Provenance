@@ -32,6 +32,10 @@ module.exports = {
     rinkeby:{
       url:process.env.INFURA_URL,
       accounts:{mnemonic:process.env.MNEMONIC}
+    },
+    fuji:{
+      url:process.env.AVA_FUJI_TESTNET_URL,
+      accounts:{mnemonic:process.env.MNEMONIC}
     }
   }
 };
