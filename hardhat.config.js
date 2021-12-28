@@ -18,6 +18,7 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  */
 
 require("@nomiclabs/hardhat-truffle5");
+require("@nomiclabs/hardhat-etherscan");
 require("hardhat-gas-reporter");
 require("dotenv").config();
 
